@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menus</title>
+    {% load menu_tags %}
+</head>
+<body>
+<main>
+    <h2 style="text-align: center;width: 100%"><I>Menus list</I></h2>
+    <div class="list" id="featured-3" style="width: auto; margin-top: 10px; ">
+        <div class="form-row" style="margin-top: 60px;display: flex; align-items: flex-start;">
+
+         {% for menu in menus %}
+             <div class="card mx-auto mb-3" style=" width: 15rem; height:auto;margin-left: 5px; margin-right:15px;display:inline-block">
+             <div class="card-body" style="font-size: 1.3rem;text-align: center;height: auto">
+                <h2><I><a href="{% url 'detail_menu' menu.name %}">{{ menu.name }}</a></I></h2>
+                 <ul>{% show_menu menu.name%}</ul>
+             </div>
+             </div>
+
+         {% endfor %}
+
+        </div>
+    </div>
+</main>
+
+{#<script>#}
+{#var toggler = document.getElementsByClassName("caret");#}
+{#var i;#}
+{##}
+{#for (i = 0; i < toggler.length; i++) {#}
+{#  toggler[i].addEventListener("click", function() {#}
+{#    this.parentElement.querySelector(".nested").classList.toggle("active");#}
+{#    this.classList.toggle("caret-down");#}
+{#  });#}
+{#}#}
+{#</script>#}
+
+</body>
+</html>

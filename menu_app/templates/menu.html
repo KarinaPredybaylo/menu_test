@@ -1,0 +1,24 @@
+{% load menu_tags %}
+{% block content%}
+{% for menu_item in menu.root_item.children %}
+        {%if menu_item.id == active_item.id and menu_item.has_children == True%}
+            <ul><a href="{% url 'detail_menu_item' menu_item.menu.name menu_item.id %}">{{menu_item.name}}</a></ul>
+                {%for child in menu_item.children %}
+                    {%with menu_item=child template_name="tree_view_template.html" %}
+                        {%include template_name%}
+                    {%endwith%}
+                {%endfor%}
+            </ul>
+            {% elif menu_item.id != active_item.id and menu_item.id == ids%}
+           <ul><a href="{% url 'detail_menu_item' menu_item.menu.name menu_item.id %}">{{menu_item.name}}</a></ul>
+            {%for child in menu_item.children %}
+                    {%with menu_item=child template_name="tree_view_template.html" %}
+                        {%include template_name%}
+                    {%endwith%}
+                {%endfor%}
+            {%else%}
+            <ul><a href="{% url 'detail_menu_item' menu_item.menu.name menu_item.id %}">{{menu_item.name}}</a></ul>
+                    {% endif %}
+
+{% endfor %}
+{% endblock %}

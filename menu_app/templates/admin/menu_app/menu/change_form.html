@@ -1,0 +1,49 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_urls %}
+{% load menu_tags %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+{% block after_related_objects %}
+{% if change %}
+  <fieldset class="module aligned">
+  <h2>{% trans "Menu Items" %}</h2>
+
+  <div class="form-row" >
+  	 <a href="../items/add/"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
+</svg> {% trans "Add an item" %}</a>
+  </div>
+
+  <div class="form-row" >
+      <ul>
+{% for menu_item in original.root_item.get_flattened %}
+    {% if forloop.first %}
+        <li><a href="../items/{{ menu_item.pk }}/">{{menu_item.name}}</a>
+        {%if menu_item.has_children %}
+            <ul>
+                {%for child in menu_item.children %}
+                    {%with menu_item=child template_name="tree_view_template.html" %}
+                        {%include template_name%}
+                    {%endwith%}
+                {%endfor%}
+            </ul>
+         {% endif %}
+        </li>
+    {%endif%}
+{%endfor%}
+</ul>
+  </div>
+  </fieldset>
+{% endif %}
+<script>
+var toggler = document.getElementsByClassName("caret");
+var i;
+
+for (i = 0; i < toggler.length; i++) {
+  toggler[i].addEventListener("click", function() {
+    this.parentElement.querySelector(".nested").classList.toggle("active");
+    this.classList.toggle("caret-down");
+  });
+}
+</script>
+{% endblock %}
