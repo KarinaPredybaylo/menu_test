@@ -20,9 +20,9 @@ def menu_detail(request, name, id=None):
         ids = [item_ac.parent.id]
         if item_ac.level > 2:
             ids.append(item_ac.parent.parent.id)
-        print(ids[-1])
+        print(ids)
         if str(item_ac.id) in request.path:
             context['active_item'] = item_ac
-            context['ids'] = ids[-1]
+            context['ids'] = ids
 
     return render(request, 'menu.html', context)
